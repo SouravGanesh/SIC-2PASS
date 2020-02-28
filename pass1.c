@@ -48,35 +48,6 @@ void main()
    fprintf(fp3,"\t%s\t%s\t%s\n",label,opcode,operand);
    fscanf(fp1,"%s%s%s",label,opcode,operand);
   }
-  /*fprintf(fp3,"%d\t%s\t%s\t%s\n",locctr,label,opcode,operand);
-  fcloseall();
-  printf("\n\nThe contents of Input Table :\n\n");
-  fp1=fopen("INPUT.DAT","r");
-  ch=fgetc(fp1);
-  while(ch!=EOF)
-   {
-    printf("%c",ch);
-    ch=fgetc(fp1);
-   }
-  printf("\n\nThe contents of Output Table :\n\n\t");
-  fp3=fopen("OUT.DAT","r");
-  ch=fgetc(fp3);
-  while(ch!=EOF)
-   {
-    printf("%c",ch);
-    ch=fgetc(fp3);
-   }
-  len=locctr-start;
-  printf("\nThe length of the program is %d.\n\n",len);
-  printf("\n\nThe contents of Symbol Table :\n\n");
-  fp2=fopen("SYMTAB.DAT","r");
-  ch=fgetc(fp2);
-  while(ch!=EOF)
-   {
-    printf("%c",ch);
-    ch=fgetc(fp2);
-   }
-  */
+
   printf("Done with Pass 1 check the OUT.DAT & SYMTAB.DAT");
-//  fcloseall();
 }
