@@ -1,15 +1,7 @@
-#define _GNU_SOURCE
 #include<stdio.h>
-#include <stdlib.h>
+#include<conio.h>
 #include<string.h>
-
-int myAtoi(char* str) 
-{ 
-    int res = 0;
-    for (int i = 0; str[i] != '\0'; ++i) 
-        res = res * 10 + str[i] - '0'; 
-    return res; 
-} 
+#include<stdlib.h>
 
 void swap(char *x, char *y)
 {
@@ -23,7 +15,7 @@ char* reverse(char *buffer, int i, int j)
     return buffer;
 }
 
-char* myitoa(int value, char* buffer, int base)
+char* itoa(int value, char* buffer, int base)
 {
 	if (base < 2 || base > 32)
 		return buffer;
@@ -32,32 +24,31 @@ char* myitoa(int value, char* buffer, int base)
 	while (n)
 	{
 		int r = n % base;
-    	if (r >= 10) 
+          if (r >= 10)
 			buffer[i++] = 65 + (r - 10);
 		else
 			buffer[i++] = 48 + r;
-    n = n / base;
+        n = n / base;
 	}
-    if (i == 0)
+     if (i == 0)
 		buffer[i++] = '0';
-    if (value < 0 && base == 10)
+     if (value < 0 && base == 10)
 		buffer[i++] = '-';
-    buffer[i] = '\0';
-	return reverse(buffer, 0, i - 1);
+       buffer[i] = '\0';
+      return reverse(buffer, 0, i - 1);
 }
 
 void main()
 {
-  char a[10],label[10],opcode[10],operand[10],symbol[10],ch,ad[60];
+  char a[10],ad[10],label[10],opcode[10],operand[10],symbol[10],ch;
   int st,diff,i,address,add,len,actual_len,finaddr,prevaddr,j=0;
-  char mnemonic[15][15]={"LDA","STA","LDCH","STCH"};
-  char code[15][15]={"33","44","53","57"};
+  char mnemonic[15][15]={"LDA","LDB","STA","STCH"};
+  char code[15][15]={"33","43","44","57"};
   FILE *fp1,*fp2,*fp3,*fp4;
-  
-  fp1=fopen("ASSMLIST.DAT","w");
-  fp2=fopen("SYMTAB.DAT","r");
-  fp3=fopen("OUT.DAT","r");
-  fp4=fopen("OBJCODE.DAT","w");
+  fp1=fopen("ASSMLIST.txt","w");
+  fp2=fopen("SYMTAB.txt","r");
+  fp3=fopen("OUT.txt","r");
+  fp4=fopen("OBJCODE.txt","w");
   fscanf(fp3,"%s%s%s",label,opcode,operand);
 
   while(strcmp(opcode,"END")!=0)
@@ -67,7 +58,7 @@ void main()
   }
   finaddr=address;
   fclose(fp3);
-  fp3=fopen("OUT.DAT","r");
+  fp3=fopen("OUT.txt","r");
 
   fscanf(fp3,"%s%s%s",label,opcode,operand);
   if(strcmp(opcode,"START")==0)
@@ -89,7 +80,7 @@ void main()
     fprintf(fp4,"^");
     for(i=2;i<(actual_len+2);i++)
     {
-     myitoa(myAtoi(ad), operand, 16);
+     itoa(operand[i],ad,16);
      fprintf(fp1,"%s",ad);
      fprintf(fp4,"%s",ad);
     }
@@ -98,7 +89,7 @@ void main()
    else if(strcmp(opcode,"WORD")==0)
    {
     len=strlen(operand);
-    myitoa(myAtoi(operand),a,10);
+    itoa(atoi(operand),a,10);
     fprintf(fp1,"%d\t%s\t%s\t%s\t00000%s\n",address,label,opcode,operand,a);
     fprintf(fp4,"^00000%s",a);
    }
@@ -121,11 +112,10 @@ void main()
     }
    }
    fscanf(fp3,"%d%s%s%s",&address,label,opcode,operand);
-  }	
+  }
   fprintf(fp1,"%d\t%s\t%s\t%s\n",address,label,opcode,operand);
   fprintf(fp4,"\nE^00%d",st);
 
-  printf("Taking OUT.DAT & SYMTAB.DAT From Pass 1 \n \nAnd Converted The Intermediate Files to OBJCODE & ASSMLIST\n");
-  printf("\nCheck the output files OBJCODE.DAT & ASSMLIST.DAT");
-  fcloseall();
+  printf("\n Intermediate file is converted into object code and Assembly listing has been done");
+
 }
