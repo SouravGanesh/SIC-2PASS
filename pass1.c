@@ -1,16 +1,16 @@
-#define _GNU_SOURCE
 #include<stdio.h>
 #include<conio.h>
 #include<string.h>
 #include<stdlib.h>
 void main()
 {
- char opcode[10],operand[10],label[10],code[10][10],ch; char mnemonic[10][10]={"START","LDA","STA","LDCH","STCH","END"};
+ char opcode[10],operand[10],label[10],code[10][10],ch;
+ char mnemonic[10][10]={"START","LDA","LDB","STA","STCH","END"};
  int locctr,start,len,i=0,j=0;
  FILE *fp1,*fp2,*fp3;
- fp1=fopen("INPUT.DAT","r");
- fp2=fopen("SYMTAB.DAT","w");
- fp3=fopen("OUT.DAT","w");
+ fp1=fopen("INPUT.txt","r");
+ fp2=fopen("SYMTAB.txt","w");
+ fp3=fopen("OUT.txt","w");
  fscanf(fp1,"%s%s%s",label,opcode,operand);
  if(strcmp(opcode,"START")==0)
   {
@@ -48,6 +48,8 @@ void main()
    fprintf(fp3,"\t%s\t%s\t%s\n",label,opcode,operand);
    fscanf(fp1,"%s%s%s",label,opcode,operand);
   }
+  fprintf(fp3,"%d\t%s\t%s\t%s\n",locctr,label,opcode,operand);
 
-  printf("Done with Pass 1 check the OUT.DAT & SYMTAB.DAT");
+  printf("Done with Pass 1 check the OUT.txt & SYMTAB.txt");
+
 }
